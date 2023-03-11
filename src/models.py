@@ -8,6 +8,7 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
+
 class Person(Base):
     __tablename__ = 'user'
     # Here we define columns for the table person
@@ -18,12 +19,26 @@ class Person(Base):
     lastName = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
 
+
 class userFavorites(Base):
     __tablename__ = 'user_favorites'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     character_id = Column(Integer, ForeignKey('character.id'))
-    character_planet = Column(integer, ForeignKey('character.id'))
+    character_planet = Column(Integer, ForeignKey('character.id'))
+    
+class Planet(Base):
+    __tablename__ = 'Planet'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user_favorites.id'))
+    name = Column(String(250), nullable=False)
+    Climate = Column(String(250), nullable=False)
+    Diameter = Column(Integer, ForeignKey("Diameter.id"))
+    Gravity = Column(Integer, ForeignKey("Gravity.id"))
+    Population = Column(Integer, ForeignKey("Population.id"))
+    Mass = Column(Integer, ForeignKey("Mass.id"))
+    
+
 class Character(Base):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
@@ -49,8 +64,10 @@ class Character(Base):
 #     person_id = Column(Integer, ForeignKey('person.id'))
 #     person = relationship(Person)
 
+
     def to_dict(self):
         return {}
 
-## Draw from SQLAlchemy base
+
+# Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
