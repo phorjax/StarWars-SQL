@@ -25,24 +25,23 @@ class userFavorites(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     character_id = Column(Integer, ForeignKey('character.id'))
-    character_planet = Column(Integer, ForeignKey('character.id'))
+    character_planet = Column(Integer, ForeignKey('Planet.id'))
     
 class Planet(Base):
     __tablename__ = 'Planet'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user_favorites.id'))
     name = Column(String(250), nullable=False)
-    Climate = Column(String(250), nullable=False)
-    Diameter = Column(Integer, ForeignKey("Diameter.id"))
-    Gravity = Column(Integer, ForeignKey("Gravity.id"))
-    Population = Column(Integer, ForeignKey("Population.id"))
-    Mass = Column(Integer, ForeignKey("Mass.id"))
+    Climate = Column(String(250), nullable=True)
+    Diameter = Column(Integer, nullable=True)
+    Gravity = Column(Integer, nullable=True)
+    Population = Column(Integer, nullable=True)
+    Mass = Column(Integer, nullable=True)
     
 
 class Character(Base):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=True)
+    name = Column(String(250), nullable=False)
     height = Column(Integer, nullable=True)
     mass = Column(Integer, nullable=True)
     hairColor = Column(String(250), nullable=True)
